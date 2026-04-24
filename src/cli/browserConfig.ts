@@ -25,6 +25,7 @@ const DEFAULT_CHROME_PROFILE = "Default";
 // The browser label is passed to the model picker which fuzzy-matches against ChatGPT's UI.
 const BROWSER_MODEL_LABELS: [ModelName, string][] = [
   // Most specific first (e.g., "gpt-5.2-thinking" before "gpt-5.2")
+  ["gpt-5.5-pro", "GPT-5.5 Pro"],
   ["gpt-5.4-pro", "GPT-5.4 Pro"],
   ["gpt-5.2-thinking", "GPT-5.2 Thinking"],
   ["gpt-5.2-instant", "GPT-5.2 Instant"],
@@ -82,11 +83,11 @@ export function normalizeChatGptModelForBrowser(model: ModelName): ModelName {
     return model;
   }
 
-  if (normalized === "gpt-5.4-pro" || normalized === "gpt-5.4") {
+  if (normalized === "gpt-5.5-pro" || normalized === "gpt-5.4-pro" || normalized === "gpt-5.4") {
     return normalized;
   }
 
-  // Pro variants: resolve to the latest Pro model in ChatGPT.
+  // Legacy Pro variants: resolve to the default Pro model in ChatGPT.
   if (normalized === "gpt-5-pro" || normalized === "gpt-5.1-pro" || normalized === "gpt-5.2-pro") {
     return "gpt-5.4-pro";
   }

@@ -9,6 +9,15 @@ const expectContains = (arr: string[], value: string) => {
 };
 
 describe("browser model selection matchers", () => {
+  it("includes pro + 5.5 tokens for gpt-5.5-pro", () => {
+    const { labelTokens, testIdTokens } = buildModelMatchersLiteralForTest("gpt-5.5-pro");
+    expect(labelTokens.some((t) => t.includes("pro"))).toBe(true);
+    expect(labelTokens.some((t) => t.includes("5.5") || t.includes("5-5"))).toBe(true);
+    expect(testIdTokens.some((t) => t.includes("gpt-5.5-pro") || t.includes("gpt-5-5-pro"))).toBe(
+      true,
+    );
+  });
+
   it("includes pro + 5.4 tokens for gpt-5.4-pro", () => {
     const { labelTokens, testIdTokens } = buildModelMatchersLiteralForTest("gpt-5.4-pro");
     expect(labelTokens.some((t) => t.includes("pro"))).toBe(true);

@@ -212,6 +212,9 @@ export function resolveApiModel(modelValue: string): ModelName {
   if (normalized.includes("claude") && normalized.includes("opus")) {
     return "claude-4.1-opus";
   }
+  if ((normalized.includes("5.5") || normalized.includes("5_5")) && normalized.includes("pro")) {
+    return "gpt-5.5-pro";
+  }
   if (normalized.includes("5.4") && normalized.includes("pro")) {
     return "gpt-5.4-pro";
   }
@@ -296,6 +299,9 @@ export function inferModelFromLabel(modelValue: string): ModelName {
   }
   if (normalized.includes("classic")) {
     return "gpt-5-pro";
+  }
+  if ((normalized.includes("5.5") || normalized.includes("5_5")) && normalized.includes("pro")) {
+    return "gpt-5.5-pro";
   }
   if ((normalized.includes("5.4") || normalized.includes("5_4")) && normalized.includes("pro")) {
     return "gpt-5.4-pro";

@@ -161,6 +161,8 @@ describe("normalizeModelOption", () => {
 describe("resolveApiModel", () => {
   test("accepts canonical names regardless of case", () => {
     expect(resolveApiModel("gpt-5.4-pro")).toBe("gpt-5.4-pro");
+    expect(resolveApiModel("gpt-5.5-pro")).toBe("gpt-5.5-pro");
+    expect(resolveApiModel("GPT-5.5 Pro")).toBe("gpt-5.5-pro");
     expect(resolveApiModel("GPT-5.4")).toBe("gpt-5.4");
     expect(resolveApiModel("gpt-5.2-pro")).toBe("gpt-5.2-pro");
     expect(resolveApiModel("GPT-5.0-PRO")).toBe("gpt-5-pro");
@@ -205,6 +207,7 @@ describe("resolveApiModel", () => {
 describe("inferModelFromLabel", () => {
   test("returns canonical names when label already matches", () => {
     expect(inferModelFromLabel("gpt-5.4-pro")).toBe("gpt-5.4-pro");
+    expect(inferModelFromLabel("gpt-5.5-pro")).toBe("gpt-5.5-pro");
     expect(inferModelFromLabel("gpt-5.4")).toBe("gpt-5.4");
     expect(inferModelFromLabel("gpt-5.2-pro")).toBe("gpt-5.2-pro");
     expect(inferModelFromLabel("gpt-5-pro")).toBe("gpt-5-pro");
@@ -216,6 +219,11 @@ describe("inferModelFromLabel", () => {
   test("preserves provider-qualified ids instead of remapping them to built-ins", () => {
     expect(inferModelFromLabel("openai/gpt-5.4")).toBe("openai/gpt-5.4");
     expect(inferModelFromLabel("anthropic/claude-sonnet-4.5")).toBe("anthropic/claude-sonnet-4.5");
+  });
+
+  test("infers 5.5 Pro variants", () => {
+    expect(inferModelFromLabel("GPT-5.5 Pro")).toBe("gpt-5.5-pro");
+    expect(inferModelFromLabel("5_5 PRO")).toBe("gpt-5.5-pro");
   });
 
   test("infers 5.4 variants", () => {
@@ -247,6 +255,7 @@ describe("inferModelFromLabel", () => {
 
   test("falls back to pro when the label references pro", () => {
     expect(inferModelFromLabel("ChatGPT Pro")).toBe("gpt-5.4-pro");
+    expect(inferModelFromLabel("GPT-5.5 Pro")).toBe("gpt-5.5-pro");
     expect(inferModelFromLabel("GPT-5.2 Pro")).toBe("gpt-5.2-pro");
     expect(inferModelFromLabel("GPT-5 Pro (Classic)")).toBe("gpt-5-pro");
   });

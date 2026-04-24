@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+### Added
+
+- OpenAI/Browser: add explicit `gpt-5.5-pro` support for API runs and ChatGPT browser model selection while leaving the default model at `gpt-5.4-pro`.
+
 ## 0.9.0 — 2026-03-08
 
 ### Changed
