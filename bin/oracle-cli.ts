@@ -343,7 +343,7 @@ program
   .addOption(new Option("--no-notify-sound", "Disable notification sounds.").default(undefined))
   .addOption(
     new Option(
-      "--timeout <seconds|auto>",
+      "--timeout <duration|seconds|auto>",
       "Overall timeout before aborting the API call (auto = 60m for Pro models, 120s otherwise).",
     )
       .argParser(parseTimeoutOption)

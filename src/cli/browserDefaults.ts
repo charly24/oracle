@@ -4,6 +4,7 @@ import type { ThinkingTimeLevel } from "../oracle.js";
 import type { BrowserModelStrategy } from "../browser/types.js";
 
 export interface BrowserDefaultsOptions {
+  model?: string;
   chatgptUrl?: string;
   browserUrl?: string;
   browserChromeProfile?: string;
@@ -108,7 +109,12 @@ export function applyBrowserDefaultsFromConfig(
     options.browserKeepBrowser = browser.keepBrowser;
   }
   if (isUnset("browserModelStrategy") && browser.modelStrategy !== undefined) {
-    options.browserModelStrategy = browser.modelStrategy;
+    const modelSource = getSource("model");
+    const modelWasExplicit = modelSource !== undefined && modelSource !== "default";
+    const shouldApplyConfiguredStrategy = !modelWasExplicit || browser.modelStrategy === "select";
+    if (shouldApplyConfiguredStrategy) {
+      options.browserModelStrategy = browser.modelStrategy;
+    }
   }
   if (isUnset("browserThinkingTime") && browser.thinkingTime !== undefined) {
     options.browserThinkingTime = browser.thinkingTime;

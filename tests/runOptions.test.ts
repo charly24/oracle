@@ -173,14 +173,14 @@ describe("resolveRunOptionsFromConfig", () => {
     expect(runOptions.model).toBe("gpt-5.2");
   });
 
-  it("maps browser engine Pro aliases to gpt-5.4-pro", () => {
+  it("maps browser engine Pro aliases to gpt-5.5-pro", () => {
     const { resolvedEngine, runOptions } = resolveRunOptionsFromConfig({
       prompt: basePrompt,
       model: "gpt-5.1-pro",
       engine: "browser",
     });
     expect(resolvedEngine).toBe("browser");
-    expect(runOptions.model).toBe("gpt-5.4-pro");
+    expect(runOptions.model).toBe("gpt-5.5-pro");
   });
 
   it("forces api engine for gpt-5.1-codex when engine is auto-detected", () => {

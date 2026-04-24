@@ -32,7 +32,7 @@ export const MODEL_CONFIGS: Record<KnownModelName, ModelConfig> = {
   },
   "gpt-5.1-pro": {
     model: "gpt-5.1-pro",
-    apiModel: "gpt-5.4-pro",
+    apiModel: "gpt-5.5-pro",
     provider: "openai",
     tokenizer: countTokensGpt5Pro as TokenizerFn,
     inputLimit: 196000,
@@ -122,7 +122,7 @@ export const MODEL_CONFIGS: Record<KnownModelName, ModelConfig> = {
   },
   "gpt-5.2-pro": {
     model: "gpt-5.2-pro",
-    apiModel: "gpt-5.4-pro",
+    apiModel: "gpt-5.5-pro",
     provider: "openai",
     tokenizer: countTokensGpt5Pro as TokenizerFn,
     inputLimit: 196000,

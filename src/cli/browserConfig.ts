@@ -29,9 +29,9 @@ const BROWSER_MODEL_LABELS: [ModelName, string][] = [
   ["gpt-5.4-pro", "GPT-5.4 Pro"],
   ["gpt-5.2-thinking", "GPT-5.2 Thinking"],
   ["gpt-5.2-instant", "GPT-5.2 Instant"],
-  ["gpt-5.2-pro", "GPT-5.4 Pro"],
-  ["gpt-5.1-pro", "GPT-5.4 Pro"],
-  ["gpt-5-pro", "GPT-5.4 Pro"],
+  ["gpt-5.2-pro", "GPT-5.5 Pro"],
+  ["gpt-5.1-pro", "GPT-5.5 Pro"],
+  ["gpt-5-pro", "GPT-5.5 Pro"],
   // Base models last (least specific)
   ["gpt-5.4", "Thinking 5.4"],
   ["gpt-5.2", "GPT-5.2"], // Selects "Auto" in ChatGPT UI
@@ -89,7 +89,7 @@ export function normalizeChatGptModelForBrowser(model: ModelName): ModelName {
 
   // Legacy Pro variants: resolve to the default Pro model in ChatGPT.
   if (normalized === "gpt-5-pro" || normalized === "gpt-5.1-pro" || normalized === "gpt-5.2-pro") {
-    return "gpt-5.4-pro";
+    return "gpt-5.5-pro";
   }
 
   // Explicit model variants: keep as-is (they have their own browser labels)

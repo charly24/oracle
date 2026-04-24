@@ -164,11 +164,24 @@ export function parseTimeoutOption(value: string | undefined): number | "auto" |
   if (value == null) return undefined;
   const normalized = value.trim().toLowerCase();
   if (normalized === "auto") return "auto";
-  const parsed = Number.parseFloat(normalized);
-  if (Number.isNaN(parsed) || parsed <= 0) {
-    throw new InvalidArgumentError('Timeout must be a positive number of seconds or "auto".');
+
+  if (/[a-z]/i.test(normalized)) {
+    const parsedMs = parseDuration(normalized, Number.NaN);
+    if (!Number.isFinite(parsedMs) || parsedMs <= 0) {
+      throw new InvalidArgumentError(
+        'Timeout must be a positive duration like "30m", a positive number of seconds, or "auto".',
+      );
+    }
+    return Math.ceil(parsedMs / 1000);
   }
-  return parsed;
+
+  const parsedSeconds = Number.parseFloat(normalized);
+  if (Number.isNaN(parsedSeconds) || parsedSeconds <= 0) {
+    throw new InvalidArgumentError(
+      'Timeout must be a positive duration like "30m", a positive number of seconds, or "auto".',
+    );
+  }
+  return parsedSeconds;
 }
 
 export function parseDurationOption(value: string | undefined, label: string): number | undefined {

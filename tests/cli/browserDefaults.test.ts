@@ -106,6 +106,47 @@ describe("applyBrowserDefaultsFromConfig", () => {
     expect(options.browserThinkingTime).toBe("light");
   });
 
+  test("applies configured model strategy when model also comes from defaults", () => {
+    const options: BrowserDefaultsOptions = {};
+    const config: UserConfig = {
+      browser: {
+        modelStrategy: "current",
+      },
+    };
+
+    applyBrowserDefaultsFromConfig(options, config, (_key) => "default");
+
+    expect(options.browserModelStrategy).toBe("current");
+  });
+
+  test("does not let global current/ignore strategy suppress an explicit per-run model", () => {
+    const options: BrowserDefaultsOptions = { model: "gpt-5.5-pro" };
+    const config: UserConfig = {
+      browser: {
+        modelStrategy: "current",
+      },
+    };
+
+    const source = (key: keyof BrowserDefaultsOptions) => (key === "model" ? "cli" : "default");
+    applyBrowserDefaultsFromConfig(options, config, source);
+
+    expect(options.browserModelStrategy).toBeUndefined();
+  });
+
+  test("keeps explicit select strategy from config even when model is per-run explicit", () => {
+    const options: BrowserDefaultsOptions = { model: "gpt-5.5-pro" };
+    const config: UserConfig = {
+      browser: {
+        modelStrategy: "select",
+      },
+    };
+
+    const source = (key: keyof BrowserDefaultsOptions) => (key === "model" ? "cli" : "default");
+    applyBrowserDefaultsFromConfig(options, config, source);
+
+    expect(options.browserModelStrategy).toBe("select");
+  });
+
   test("applies manual-login defaults from config when CLI flags are untouched", () => {
     const options: BrowserDefaultsOptions = {};
     const config: UserConfig = {

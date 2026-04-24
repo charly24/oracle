@@ -5,6 +5,7 @@ import {
   parseFloatOption,
   parseIntOption,
   parseSearchOption,
+  parseTimeoutOption,
   resolvePreviewMode,
   resolveApiModel,
   inferModelFromLabel,
@@ -134,6 +135,24 @@ describe("parseHeartbeatOption", () => {
   test("rejects negative or non-numeric values", () => {
     expect(() => parseHeartbeatOption("-5")).toThrow(InvalidArgumentError);
     expect(() => parseHeartbeatOption("nope")).toThrow(InvalidArgumentError);
+  });
+});
+
+describe("parseTimeoutOption", () => {
+  test("accepts auto and bare seconds", () => {
+    expect(parseTimeoutOption("auto")).toBe("auto");
+    expect(parseTimeoutOption("1200")).toBe(1200);
+  });
+
+  test("accepts duration strings instead of truncating them as seconds", () => {
+    expect(parseTimeoutOption("20m")).toBe(1200);
+    expect(parseTimeoutOption("90s")).toBe(90);
+    expect(parseTimeoutOption("500ms")).toBe(1);
+  });
+
+  test("throws on invalid durations", () => {
+    expect(() => parseTimeoutOption("nope")).toThrow(InvalidArgumentError);
+    expect(() => parseTimeoutOption("0")).toThrow(InvalidArgumentError);
   });
 });
 
