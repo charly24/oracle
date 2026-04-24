@@ -3,7 +3,7 @@ import { buildBrowserConfig, resolveBrowserModelLabel } from "../../src/cli/brow
 
 describe("buildBrowserConfig", () => {
   test("uses defaults when optional flags omitted", async () => {
-    const config = await buildBrowserConfig({ model: "gpt-5.4-pro" });
+    const config = await buildBrowserConfig({ model: "gpt-5.5-pro" });
     expect(config).toMatchObject({
       chromeProfile: "Default",
       chromePath: null,
@@ -15,7 +15,7 @@ describe("buildBrowserConfig", () => {
       headless: undefined,
       keepBrowser: undefined,
       hideWindow: undefined,
-      desiredModel: "GPT-5.4 Pro",
+      desiredModel: "GPT-5.5 Pro",
       debug: undefined,
       allowCookieErrors: true,
     });

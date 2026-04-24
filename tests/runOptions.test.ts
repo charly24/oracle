@@ -24,7 +24,7 @@ describe("resolveRunOptionsFromConfig", () => {
     expect(resolvedEngine).toBe("api");
   });
 
-  it("defaults to gpt-5.4-pro when model not provided", () => {
+  it("defaults to DEFAULT_MODEL when model not provided", () => {
     const { runOptions } = resolveRunOptionsFromConfig({
       prompt: basePrompt,
     });
